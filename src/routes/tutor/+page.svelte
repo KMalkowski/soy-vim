@@ -2,12 +2,18 @@
 	import { initVimMode } from 'monaco-vim';
 	import type { Action } from 'svelte/action';
 	import { editor } from 'monaco-editor';
+	import { dracula } from '../../themes/dracula';
+
+	editor.defineTheme('dracula', dracula);
+
+	editor.setTheme('dracula');
 
 	const mountEditor: Action = (node) => {
 		$effect(() => {
 			const editorInstance = editor.create(node, {
 				language: 'typescript',
-				automaticLayout: true
+				automaticLayout: true,
+				lineNumbers: 'relative'
 			});
 
 			const vimMode = initVimMode(
@@ -18,14 +24,16 @@
 	};
 </script>
 
-<h1>Learn VIM motions today.</h1>
 <div use:mountEditor class="editor"></div>
 <div class="vim-status-bar"></div>
 
 <style>
 	.editor {
 		width: 100%;
-		height: 100%;
-		min-height: 90vh;
+		height: calc(100vh - 4.5em);
+	}
+
+	.vim-status-bar {
+		height: 1.5em;
 	}
 </style>
