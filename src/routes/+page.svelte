@@ -5,7 +5,7 @@
 </script>
 
 <svelte:head>
-	<title>ViMotion</title>
+	<title>Soy Vim</title>
 	<meta
 		name="description"
 		content="Learn Vim motions in a guided way and enhance your productivity today."
