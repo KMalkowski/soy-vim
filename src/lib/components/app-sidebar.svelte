@@ -6,7 +6,6 @@
 	<Sidebar.Header />
 	<Sidebar.Content>
 		<Sidebar.Group />
-		<Sidebar.Group />
 	</Sidebar.Content>
 	<Sidebar.Footer />
 </Sidebar.Root>

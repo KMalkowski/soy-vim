@@ -2,21 +2,18 @@
 	import { initVimMode } from 'monaco-vim';
 	import type { Action } from 'svelte/action';
 	import { editor } from 'monaco-editor';
-	import { dracula } from '../../lib/themes/dracula';
-	import '../../lib/monaco-config';
+	import { dracula } from '$lib/themes/dracula';
+	import '$lib/monaco-config';
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
-	import { browser } from '$app/environment';
-	import { onMount } from 'svelte';
 
 	const { data } = $props();
+
+	editor.defineTheme('dracula', dracula);
 	const dialogOpen = $state(true);
-	let editorNode: HTMLElement;
 
-	onMount(() => {
-		if (browser) {
-			editor.defineTheme('dracula', dracula);
-
-			const editorInstance = editor.create(editorNode, {
+	const mountEditor: Action = (node) => {
+		$effect(() => {
+			const editorInstance = editor.create(node, {
 				language: 'javascript',
 				automaticLayout: true,
 				lineNumbers: 'relative',
@@ -39,14 +36,15 @@
 				editorInstance.dispose();
 				vimMode.dispose();
 			};
-		}
-	});
+		});
+	};
 </script>
 
-<div bind:this={editorNode} class="editor"></div>
+<div use:mountEditor class="editor"></div>
 <div class="vim-status-bar"></div>
+
 <Dialog.Root open={dialogOpen}>
-	<Dialog.Content>
+	<Dialog.Content class="min-w-96">
 		<Dialog.Header>
 			<Dialog.Title>Instructions</Dialog.Title>
 			<Dialog.Description>{data.exercise.instructions}</Dialog.Description>
@@ -56,11 +54,13 @@
 
 <style>
 	.editor {
+		height: calc(100vh - 3.5em);
 		width: 100%;
-		height: calc(100vh - 4.5em);
 	}
 
 	.vim-status-bar {
+		width: 100%;
 		height: 1.5em;
+		background: var(--background);
 	}
 </style>

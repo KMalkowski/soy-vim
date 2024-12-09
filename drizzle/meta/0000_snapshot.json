@@ -1,0 +1,356 @@
+{
+  "version": "5",
+  "dialect": "mysql",
+  "id": "999b3c3a-9857-4983-a94f-21d43fee6f07",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "tables": {
+    "vim_tutor_exercise": {
+      "name": "vim_tutor_exercise",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "code": {
+          "name": "code",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "instructions": {
+          "name": "instructions",
+          "type": "varchar(2000)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "vim_tutor_exercise_id": {
+          "name": "vim_tutor_exercise_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {
+        "vim_tutor_exercise_id_unique": {
+          "name": "vim_tutor_exercise_id_unique",
+          "columns": [
+            "id"
+          ]
+        }
+      }
+    },
+    "vim_tutor_roadmap": {
+      "name": "vim_tutor_roadmap",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "description": {
+          "name": "description",
+          "type": "varchar(2000)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "vim_tutor_roadmap_id": {
+          "name": "vim_tutor_roadmap_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {
+        "vim_tutor_roadmap_id_unique": {
+          "name": "vim_tutor_roadmap_id_unique",
+          "columns": [
+            "id"
+          ]
+        }
+      }
+    },
+    "vim_tutor_roadmapProgress": {
+      "name": "vim_tutor_roadmapProgress",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "roadmap_id": {
+          "name": "roadmap_id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "completed_steps": {
+          "name": "completed_steps",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "vim_tutor_roadmapProgress_user_id_vim_tutor_user_id_fk": {
+          "name": "vim_tutor_roadmapProgress_user_id_vim_tutor_user_id_fk",
+          "tableFrom": "vim_tutor_roadmapProgress",
+          "tableTo": "vim_tutor_user",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "vim_tutor_roadmapProgress_roadmap_id_vim_tutor_roadmap_id_fk": {
+          "name": "vim_tutor_roadmapProgress_roadmap_id_vim_tutor_roadmap_id_fk",
+          "tableFrom": "vim_tutor_roadmapProgress",
+          "tableTo": "vim_tutor_roadmap",
+          "columnsFrom": [
+            "roadmap_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "vim_tutor_roadmapProgress_id": {
+          "name": "vim_tutor_roadmapProgress_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {
+        "vim_tutor_roadmapProgress_id_unique": {
+          "name": "vim_tutor_roadmapProgress_id_unique",
+          "columns": [
+            "id"
+          ]
+        }
+      }
+    },
+    "vim_tutor_roadmapStep": {
+      "name": "vim_tutor_roadmapStep",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "roadmapId": {
+          "name": "roadmapId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "stepNumber": {
+          "name": "stepNumber",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "exercise_id": {
+          "name": "exercise_id",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "vim_tutor_roadmapStep_roadmapId_vim_tutor_roadmap_id_fk": {
+          "name": "vim_tutor_roadmapStep_roadmapId_vim_tutor_roadmap_id_fk",
+          "tableFrom": "vim_tutor_roadmapStep",
+          "tableTo": "vim_tutor_roadmap",
+          "columnsFrom": [
+            "roadmapId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "vim_tutor_roadmapStep_exercise_id_vim_tutor_exercise_id_fk": {
+          "name": "vim_tutor_roadmapStep_exercise_id_vim_tutor_exercise_id_fk",
+          "tableFrom": "vim_tutor_roadmapStep",
+          "tableTo": "vim_tutor_exercise",
+          "columnsFrom": [
+            "exercise_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "vim_tutor_roadmapStep_id": {
+          "name": "vim_tutor_roadmapStep_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {
+        "vim_tutor_roadmapStep_id_unique": {
+          "name": "vim_tutor_roadmapStep_id_unique",
+          "columns": [
+            "id"
+          ]
+        }
+      }
+    },
+    "vim_tutor_session": {
+      "name": "vim_tutor_session",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "expires_at": {
+          "name": "expires_at",
+          "type": "datetime",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "vim_tutor_session_user_id_vim_tutor_user_id_fk": {
+          "name": "vim_tutor_session_user_id_vim_tutor_user_id_fk",
+          "tableFrom": "vim_tutor_session",
+          "tableTo": "vim_tutor_user",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "vim_tutor_session_id": {
+          "name": "vim_tutor_session_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "vim_tutor_user": {
+      "name": "vim_tutor_user",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "age": {
+          "name": "age",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "username": {
+          "name": "username",
+          "type": "varchar(32)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "password_hash": {
+          "name": "password_hash",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "vim_tutor_user_id": {
+          "name": "vim_tutor_user_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {
+        "vim_tutor_user_username_unique": {
+          "name": "vim_tutor_user_username_unique",
+          "columns": [
+            "username"
+          ]
+        }
+      }
+    }
+  },
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  },
+  "internal": {
+    "tables": {},
+    "indexes": {}
+  }
+}

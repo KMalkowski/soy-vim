@@ -1,13 +1,5 @@
 import { relations } from 'drizzle-orm';
-import {
-	serial,
-	text,
-	int,
-	varchar,
-	datetime,
-	mysqlTableCreator,
-	bigint
-} from 'drizzle-orm/mysql-core';
+import { text, int, varchar, datetime, mysqlTableCreator, bigint } from 'drizzle-orm/mysql-core';
 
 export const createTable = mysqlTableCreator((name) => `vim_tutor_${name}`);
 
@@ -43,7 +35,7 @@ export const roadmapRelations = relations(roadmap, ({ many }) => ({
 
 export const roadmapStep = createTable('roadmapStep', {
 	id: bigint('id', { mode: 'number' }).primaryKey().autoincrement().unique(),
-	roadmapId: int('id').references(() => roadmap.id),
+	roadmapId: int('roadmapId').references(() => roadmap.id),
 	stepNumber: int('stepNumber'),
 	exerciseId: bigint('exercise_id', { mode: 'number' }).references(() => exercise.id)
 });

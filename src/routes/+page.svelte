@@ -27,7 +27,7 @@
 				<div class="mx-auto mt-5 max-w-md sm:flex sm:justify-center md:mt-8">
 					<div class="rounded-md shadow">
 						<a
-							href="/tutor"
+							href="/tutor/1?step=1"
 							class="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 md:px-10 md:py-4 md:text-lg"
 						>
 							Start Learning
