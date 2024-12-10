@@ -38,8 +38,8 @@
 									<Sidebar.MenuSubItem>
 										<Sidebar.MenuSubButton>
 											{#snippet child({ props })}
-												<a href={`/tutor/${data.roadmap?.id}?step=${item.stepNumber}`} {...props}
-													>{item.exerciseId}</a
+												<a href={`/tutor/${data.roadmap?.id}?step=${item.stepNumber}`}
+													>{item.exercise?.title}</a
 												>
 											{/snippet}
 										</Sidebar.MenuSubButton>

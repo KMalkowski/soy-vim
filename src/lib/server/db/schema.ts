@@ -21,7 +21,8 @@ export const session = createTable('session', {
 export const exercise = createTable('exercise', {
 	id: bigint('id', { mode: 'number' }).primaryKey().autoincrement().unique(),
 	code: text('code'),
-	instructions: varchar('instructions', { length: 2000 })
+	instructions: varchar('instructions', { length: 2000 }),
+	title: varchar('title', { length: 255 })
 });
 
 export const roadmap = createTable('roadmap', {
@@ -44,6 +45,10 @@ export const roadmapStepRelations = relations(roadmapStep, ({ one }) => ({
 	roadmap: one(roadmap, {
 		fields: [roadmapStep.roadmapId],
 		references: [roadmap.id]
+	}),
+	exercise: one(exercise, {
+		fields: [roadmapStep.exerciseId],
+		references: [exercise.id]
 	})
 }));
 

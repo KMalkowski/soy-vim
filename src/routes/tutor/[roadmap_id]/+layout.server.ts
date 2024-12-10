@@ -11,7 +11,11 @@ export const load: LayoutServerLoad = async ({ params, locals }) => {
 		roadmap: await db.query.roadmap.findFirst({
 			where: (r, { eq }) => eq(r.id, Number(params.roadmap_id)),
 			with: {
-				steps: true
+				steps: {
+					with: {
+						exercise: true
+					}
+				}
 			}
 		}),
 		roadmapProgress: await db.query.roadmapProgress.findFirst({
