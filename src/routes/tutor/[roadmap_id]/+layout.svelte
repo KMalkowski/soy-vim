@@ -1,7 +1,9 @@
 <script lang="ts">
+	import Button from '$lib/components/ui/button/button.svelte';
 	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
 	import X from 'lucide-svelte/icons/x';
-
+	import Info from 'lucide-svelte/icons/info';
+	import { isInstructionsOpen } from './tutor-store';
 	let { children, data } = $props();
 	let isOpen = $state(true);
 </script>
@@ -38,8 +40,9 @@
 									<Sidebar.MenuSubItem>
 										<Sidebar.MenuSubButton>
 											{#snippet child({ props })}
-												<a href={`/tutor/${data.roadmap?.id}?step=${item.stepNumber}`}
-													>{item.exercise?.title}</a
+												<a
+													href={`/tutor/${data.roadmap?.id}?step=${item.stepNumber}`}
+													onclick={() => ($isInstructionsOpen = true)}>{item.exercise?.title}</a
 												>
 											{/snippet}
 										</Sidebar.MenuSubButton>
@@ -54,8 +57,23 @@
 		<Sidebar.Footer />
 	</Sidebar.Root>
 	<main class="w-full overflow-hidden">
-		<Sidebar.Trigger />
-
+		<div class="flex items-center justify-between">
+			<Sidebar.Trigger />
+			<Button
+				size="sm"
+				class="gap-2"
+				onclick={() => {
+					isInstructionsOpen.update((o) => !o);
+				}}
+			>
+				<Info /> Show instructions
+			</Button>
+			<a href="/">
+				<Button variant="outline" size="sm" class="gap-2">
+					<X /> Close Editor
+				</Button>
+			</a>
+		</div>
 		{@render children?.()}
 	</main>
 </Sidebar.Provider>
