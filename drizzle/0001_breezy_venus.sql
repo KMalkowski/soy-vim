@@ -1,0 +1,1 @@
+ALTER TABLE `vim_tutor_exercise` ADD `title` varchar(255);

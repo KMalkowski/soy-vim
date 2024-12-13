@@ -59,6 +59,13 @@ export const roadmapProgress = createTable('roadmapProgress', {
 	completedSteps: int('completed_steps')
 });
 
+export const roadmapProgressRelations = relations(roadmapProgress, ({ one }) => ({
+	user: one(user, {
+		fields: [roadmapProgress.userId],
+		references: [user.id]
+	})
+}));
+
 export type Roadmap = typeof roadmap.$inferSelect;
 
 export type RoadmapStep = typeof roadmapStep.$inferSelect;
