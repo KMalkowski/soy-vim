@@ -3,7 +3,8 @@
 	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
 	import X from 'lucide-svelte/icons/x';
 	import Info from 'lucide-svelte/icons/info';
-	import { isInstructionsOpen } from './tutor-store';
+	import Gift from 'lucide-svelte/icons/gift';
+	import { isInstructionsOpen, isBonusOpen } from './tutor-store';
 	let { children, data } = $props();
 	let isOpen = $state(true);
 </script>
@@ -59,15 +60,27 @@
 	<main class="w-full overflow-hidden">
 		<div class="flex items-center justify-between">
 			<Sidebar.Trigger />
-			<Button
-				size="sm"
-				class="gap-2"
-				onclick={() => {
-					isInstructionsOpen.update((o) => !o);
-				}}
-			>
-				<Info /> Show instructions
-			</Button>
+			<div class="flex gap-2">
+				<Button
+					size="sm"
+					class="gap-2"
+					onclick={() => {
+						isInstructionsOpen.update((o) => !o);
+					}}
+				>
+					<Info /> Show instructions
+				</Button>
+				<Button
+					size="sm"
+					variant="outline"
+					class="gap-2"
+					onclick={() => {
+						isBonusOpen.update((o) => !o);
+					}}
+				>
+					<Gift /> Show bonus
+				</Button>
+			</div>
 			<a href="/">
 				<Button variant="outline" size="sm" class="gap-2">
 					<X /> Close Editor

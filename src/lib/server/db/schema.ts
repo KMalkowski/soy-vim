@@ -22,7 +22,8 @@ export const exercise = createTable('exercise', {
 	id: bigint('id', { mode: 'number' }).primaryKey().autoincrement().unique(),
 	code: text('code'),
 	instructions: varchar('instructions', { length: 2000 }),
-	title: varchar('title', { length: 255 })
+	title: varchar('title', { length: 255 }),
+	bonus: varchar('bonus', { length: 2000 })
 });
 
 export const roadmap = createTable('roadmap', {

@@ -6,7 +6,8 @@
 	import '$lib/monaco-config';
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
 	import Button from '$lib/components/ui/button/button.svelte';
-	import { isInstructionsOpen } from './tutor-store';
+	import { isInstructionsOpen, isBonusOpen } from './tutor-store';
+	import { Separator } from '$lib/components/ui/separator';
 
 	const { data } = $props();
 	let currentChar = $state('');
@@ -80,6 +81,26 @@
 			onclick={() => {
 				$isInstructionsOpen = false;
 			}}><Button>Let's go!</Button></Dialog.Footer
+		>
+	</Dialog.Content>
+</Dialog.Root>
+
+<Dialog.Root
+	open={$isBonusOpen}
+	onOpenChange={(open) => {
+		$isBonusOpen = open;
+	}}
+>
+	<Dialog.Content class="min-w-96">
+		<Dialog.Header>
+			<Dialog.Title>Bonus</Dialog.Title>
+			<Separator />
+			<Dialog.Description>{@html data.exercise.bonus}</Dialog.Description>
+		</Dialog.Header>
+		<Dialog.Footer
+			onclick={() => {
+				$isBonusOpen = false;
+			}}><Button>Got it!</Button></Dialog.Footer
 		>
 	</Dialog.Content>
 </Dialog.Root>
