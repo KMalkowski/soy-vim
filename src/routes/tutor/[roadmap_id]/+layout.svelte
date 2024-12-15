@@ -4,9 +4,12 @@
 	import X from 'lucide-svelte/icons/x';
 	import Info from 'lucide-svelte/icons/info';
 	import Gift from 'lucide-svelte/icons/gift';
-	import { isInstructionsOpen, isBonusOpen } from './tutor-store';
+	import { isInstructionsOpen, isBonusOpen, currentRoadmapStep } from './tutor-store';
 	let { children, data } = $props();
 	let isOpen = $state(true);
+
+	$inspect(data);
+	$inspect($currentRoadmapStep);
 </script>
 
 <Sidebar.Provider
@@ -43,7 +46,10 @@
 											{#snippet child({ props })}
 												<a
 													href={`/tutor/${data.roadmap?.id}?step=${item.stepNumber}`}
-													onclick={() => ($isInstructionsOpen = true)}>{item.exercise?.title}</a
+													onclick={() => {
+														$currentRoadmapStep = item.stepNumber || 0;
+														$isInstructionsOpen = true;
+													}}>{item.exercise?.title}</a
 												>
 											{/snippet}
 										</Sidebar.MenuSubButton>
@@ -70,16 +76,18 @@
 				>
 					<Info /> Show instructions
 				</Button>
-				<Button
-					size="sm"
-					variant="outline"
-					class="gap-2"
-					onclick={() => {
-						isBonusOpen.update((o) => !o);
-					}}
-				>
-					<Gift /> Show bonus
-				</Button>
+				{#if data.roadmap?.steps.find((step) => step.stepNumber === $currentRoadmapStep)?.exercise?.bonus?.length}
+					<Button
+						size="sm"
+						variant="outline"
+						class="gap-2"
+						onclick={() => {
+							isBonusOpen.update((o) => !o);
+						}}
+					>
+						<Gift /> Show bonus
+					</Button>
+				{/if}
 			</div>
 			<a href="/">
 				<Button variant="outline" size="sm" class="gap-2">

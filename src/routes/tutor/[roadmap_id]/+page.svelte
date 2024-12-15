@@ -1,22 +1,58 @@
 <script lang="ts">
 	import { initVimMode } from 'monaco-vim';
 	import type { Action } from 'svelte/action';
-	import { editor, Position } from 'monaco-editor';
+	import * as monaco from 'monaco-editor';
 	import { dracula } from '$lib/themes/dracula';
 	import '$lib/monaco-config';
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import { isInstructionsOpen, isBonusOpen } from './tutor-store';
 	import { Separator } from '$lib/components/ui/separator';
+	import * as prettier from 'prettier/standalone';
+	import * as babel from 'prettier/parser-babel';
+	import prettierPluginEstree from 'prettier/plugins/estree';
 
 	const { data } = $props();
 	let currentChar = $state('');
 
-	editor.defineTheme('dracula', dracula);
+	monaco.editor.defineTheme('dracula', dracula);
+	monaco.languages.registerDocumentFormattingEditProvider('javascript', {
+		async provideDocumentFormattingEdits(model) {
+			var text1 = await prettier.format(model.getValue(), {
+				useTabs: true,
+				singleQuote: true,
+				trailingComma: 'none',
+				printWidth: 100,
+				wrapAttributes: 'force',
+				parser: 'babel',
+				plugins: [babel, prettierPluginEstree],
+				htmlWhitespaceSensitivity: 'ignore',
+				arrowParens: 'always',
+				bracketSpacing: true,
+				endOfLine: 'lf',
+				insertPragma: false,
+				singleAttributePerLine: false,
+				bracketSameLine: false,
+				proseWrap: 'preserve',
+				quoteProps: 'as-needed',
+				requirePragma: false,
+				semi: true,
+				tabWidth: 4,
+				vueIndentScriptAndStyle: false
+			});
+
+			return [
+				{
+					range: model.getFullModelRange(),
+					text: text1
+				}
+			];
+		}
+	});
 
 	const mountEditor: Action = (node) => {
 		$effect(() => {
-			const editorInstance = editor.create(node, {
+			const editorInstance = monaco.editor.create(node, {
 				language: 'javascript',
 				automaticLayout: true,
 				lineNumbers: 'relative',
@@ -28,8 +64,9 @@
 				folding: true
 			});
 
+			editorInstance.updateOptions({ wordWrap: 'on', wrappingStrategy: 'advanced' });
 			editorInstance.trigger('editor', 'editor.action.formatDocument', null);
-			const position = new Position(2, 8);
+			const position = new monaco.Position(2, 8);
 			editorInstance.setPosition(position);
 			editorInstance.focus();
 

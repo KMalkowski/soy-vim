@@ -1,0 +1,6 @@
+{
+	"goalCharacter": "★",
+	"allowedCharacters": [">", "<", "^", "v", ",", "'"],
+	"notAllowedCharacters": ["#"],
+	"numberOfMovesAllowed": 10
+}

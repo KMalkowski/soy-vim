@@ -32,6 +32,9 @@ importers:
       drizzle-orm:
         specifier: ^0.33.0
         version: 0.33.0(mysql2@3.11.5)
+      estree:
+        specifier: link:@types/prettier/plugins/estree
+        version: link:@types/prettier/plugins/estree
       monaco-editor:
         specifier: ^0.52.0
         version: 0.52.0

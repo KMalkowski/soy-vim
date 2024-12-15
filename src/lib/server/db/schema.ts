@@ -1,5 +1,13 @@
 import { relations } from 'drizzle-orm';
-import { text, int, varchar, datetime, mysqlTableCreator, bigint } from 'drizzle-orm/mysql-core';
+import {
+	text,
+	int,
+	varchar,
+	datetime,
+	mysqlTableCreator,
+	bigint,
+	json
+} from 'drizzle-orm/mysql-core';
 
 export const createTable = mysqlTableCreator((name) => `vim_tutor_${name}`);
 
@@ -23,7 +31,13 @@ export const exercise = createTable('exercise', {
 	code: text('code'),
 	instructions: varchar('instructions', { length: 2000 }),
 	title: varchar('title', { length: 255 }),
-	bonus: varchar('bonus', { length: 2000 })
+	bonus: varchar('bonus', { length: 2000 }),
+	rules: json('rules').$type<{
+		allowedCharacters: string[] | undefined;
+		notAllowedCharacters: string[] | undefined;
+		numberOfMovesAllowed: number | undefined;
+		goalCharacter: string | undefined;
+	}>()
 });
 
 export const roadmap = createTable('roadmap', {
